@@ -1,9 +1,10 @@
-import React from 'react'
-
+import React from 'react';
+import './app.css';
 
 const  App = () => {
   return (
-    <h1>Hola mundi</h1>
+    <h1 className="titulo">Hola mundo mundial</h1>
+    
   )
 }
 
