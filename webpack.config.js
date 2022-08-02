@@ -1,13 +1,14 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode:"development",
+  mode: "development",
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
+    publicPath: path.resolve(__dirname, "/"),
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -30,15 +31,14 @@ module.exports = {
         ],
       },
       {
-        test: /\.(css|scss)$/,
-        use:[
-                  {
-                    loader:MiniCssExtractPlugin.loader
-                  },
-                   'css-loader',
-                   'sass-loader',
-            ]        
-      },  
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          "css-loader",          
+        ],
+      },
     ],
   },
   plugins: [
@@ -47,12 +47,15 @@ module.exports = {
       filename: "./index.html",
     }),
     new MiniCssExtractPlugin({
-      filename: "assets/[name].css/",
-    })    
+      filename: "assets/[name].css",
+    }),
   ],
-  devServer:{
-    allowedHosts:path.join(__dirname,'dist'),
-    compress:true,
-    port:3005
-  } 
+  devServer: {    
+    historyApiFallback:true,
+    static: {
+        directory: path.resolve(__dirname, 'dist'), // carpeta donde están los archivos
+    },
+    compress: true, // comprimir
+    port: 3005, // puerto
+  },  
 };
